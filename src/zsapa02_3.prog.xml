@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <PROGDIR>
-    <NAME>ZSAPA01</NAME>
+    <NAME>ZSAPA02_3</NAME>
     <SUBC>1</SUBC>
     <RLOAD>E</RLOAD>
     <FIXPT>X</FIXPT>
@@ -12,7 +12,7 @@
    <DYNPROS>
     <item>
      <HEADER>
-      <PROGRAM>ZSAPA01</PROGRAM>
+      <PROGRAM>ZSAPA02_3</PROGRAM>
       <SCREEN>0100</SCREEN>
       <LANGUAGE>E</LANGUAGE>
       <DESCRIPT>결과화면</DESCRIPT>
@@ -28,7 +28,7 @@
       </RPY_DYCATT>
       <RPY_DYCATT>
        <TYPE>CUST_CTRL</TYPE>
-       <NAME>CC1</NAME>
+       <NAME>MY_CC1</NAME>
        <ELEMENT_OF>SCREEN</ELEMENT_OF>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
@@ -146,22 +146,28 @@
     </DOC>
     <TIT>
      <RSMPE_TITT>
-      <CODE>TITLE100</CODE>
-      <TEXT>[태경항공] 결과화면</TEXT>
+      <CODE>S100</CODE>
+      <TEXT>[태경항공] 운항일정 및 항공기 조회</TEXT>
      </RSMPE_TITT>
     </TIT>
    </CUA>
    <TPOOL>
     <item>
      <ID>R</ID>
-     <ENTRY>[태경항공]운항일정 조회</ENTRY>
-     <LENGTH>13</LENGTH>
+     <ENTRY>[태경항공] 운항일정 및 항공기 조회</ENTRY>
+     <LENGTH>20</LENGTH>
     </item>
     <item>
      <ID>S</ID>
-     <KEY>S_PLTYPE</KEY>
-     <ENTRY>항공기 타입</ENTRY>
-     <LENGTH>14</LENGTH>
+     <KEY>S_PLANE</KEY>
+     <ENTRY>항공기명</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>S_SPFIL</KEY>
+     <ENTRY>운항코드</ENTRY>
+     <LENGTH>12</LENGTH>
     </item>
    </TPOOL>
   </asx:values>
