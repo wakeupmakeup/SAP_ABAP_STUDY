@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <PROGDIR>
-    <NAME>ZSAPA02_3</NAME>
+    <NAME>ZSAP02_3_1</NAME>
     <SUBC>1</SUBC>
     <RLOAD>E</RLOAD>
     <FIXPT>X</FIXPT>
@@ -12,14 +12,14 @@
    <DYNPROS>
     <item>
      <HEADER>
-      <PROGRAM>ZSAPA02_3</PROGRAM>
+      <PROGRAM>ZSAP02_3_1</PROGRAM>
       <SCREEN>0100</SCREEN>
       <LANGUAGE>E</LANGUAGE>
       <DESCRIPT>결과화면</DESCRIPT>
       <TYPE>N</TYPE>
       <NEXTSCREEN>0100</NEXTSCREEN>
-      <LINES>027</LINES>
-      <COLUMNS>121</COLUMNS>
+      <LINES>029</LINES>
+      <COLUMNS>128</COLUMNS>
      </HEADER>
      <CONTAINERS>
       <RPY_DYCATT>
@@ -28,12 +28,12 @@
       </RPY_DYCATT>
       <RPY_DYCATT>
        <TYPE>CUST_CTRL</TYPE>
-       <NAME>MY_CC1</NAME>
+       <NAME>CC1</NAME>
        <ELEMENT_OF>SCREEN</ELEMENT_OF>
        <LINE>001</LINE>
        <COLUMN>001</COLUMN>
-       <LENGTH>121</LENGTH>
-       <HEIGHT>027</HEIGHT>
+       <LENGTH>128</LENGTH>
+       <HEIGHT>029</HEIGHT>
       </RPY_DYCATT>
      </CONTAINERS>
      <FIELDS>
@@ -64,7 +64,7 @@
       <ACTCODE>000001</ACTCODE>
       <PFKCODE>000001</PFKCODE>
       <BUTCODE>0001</BUTCODE>
-      <INT_NOTE>S100</INT_NOTE>
+      <INT_NOTE>스플릿 결과 화면</INT_NOTE>
      </RSMPE_STAT>
     </STA>
     <FUN>
@@ -128,45 +128,39 @@
       <OBJ_TYPE>A</OBJ_TYPE>
       <OBJ_CODE>000001</OBJ_CODE>
       <MODAL>D</MODAL>
-      <INT_NOTE>S100</INT_NOTE>
+      <INT_NOTE>스플릿 결과 화면</INT_NOTE>
      </RSMPE_ATRT>
      <RSMPE_ATRT>
       <OBJ_TYPE>P</OBJ_TYPE>
       <OBJ_CODE>000001</OBJ_CODE>
       <MODAL>D</MODAL>
-      <INT_NOTE>S100</INT_NOTE>
+      <INT_NOTE>스플릿 결과 화면</INT_NOTE>
      </RSMPE_ATRT>
      <RSMPE_ATRT>
       <OBJ_TYPE>B</OBJ_TYPE>
       <OBJ_CODE>000001</OBJ_CODE>
       <SUB_CODE>0001</SUB_CODE>
       <MODAL>D</MODAL>
-      <INT_NOTE>S100</INT_NOTE>
+      <INT_NOTE>스플릿 결과 화면</INT_NOTE>
      </RSMPE_ATRT>
     </DOC>
-    <TIT>
-     <RSMPE_TITT>
-      <CODE>S100</CODE>
-      <TEXT>[태경항공] 운항일정 및 항공기 조회</TEXT>
-     </RSMPE_TITT>
-    </TIT>
    </CUA>
    <TPOOL>
     <item>
      <ID>R</ID>
-     <ENTRY>[태경항공] 운항일정 및 항공기 조회[Splitter]</ENTRY>
-     <LENGTH>30</LENGTH>
+     <ENTRY>스플릿 연습하기</ENTRY>
+     <LENGTH>8</LENGTH>
     </item>
     <item>
      <ID>S</ID>
-     <KEY>S_PLANE</KEY>
-     <ENTRY>항공기명</ENTRY>
+     <KEY>S_CUSTOM</KEY>
+     <ENTRY>고객ID</ENTRY>
      <LENGTH>12</LENGTH>
     </item>
     <item>
      <ID>S</ID>
-     <KEY>S_SPFIL</KEY>
-     <ENTRY>운항코드</ENTRY>
+     <KEY>S_FLIGHT</KEY>
+     <ENTRY>항공일정</ENTRY>
      <LENGTH>12</LENGTH>
     </item>
    </TPOOL>
