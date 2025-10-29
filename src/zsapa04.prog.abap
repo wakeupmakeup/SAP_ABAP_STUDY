@@ -3,7 +3,7 @@
 *&---------------------------------------------------------------------*
 *&
 *&---------------------------------------------------------------------*
-REPORT zsapa03.
+REPORT zsapa04.
 
 " 프로그램에서 가장 먼저 할 일은 변수를 선언하는 것이다.
 " 먼저 내가 사용할 테이블을 여기에 선언하여 올려둔다.
@@ -12,7 +12,62 @@ TABLES: sflight, scarr, spfli.
 DATA : gv_container TYPE REF TO cl_gui_custom_container.
 DATA : gv_grid TYPE REF TO cl_gui_alv_grid.
 DATA : gv_docking TYPE REF TO cl_gui_docking_container.
+DATA : BEGIN OF gs_seats,
+         carrid     TYPE sflight-carrid,
+         carrname   TYPE scarr-carrname,
+         connid     TYPE sflight-connid,
+         fldate     TYPE sflight-fldate,
+         cityfrom   TYPE spfli-cityfrom,
+         airpfrom   TYPE spfli-airpfrom,
+         cityto     TYPE spfli-cityto,
+         airpto     TYPE spfli-airpto,
+         seatsmax    TYPE sflight-seatsmax,
+         seatsocc   TYPE sflight-seatsocc,
+         seatsmax_b TYPE sflight-seatsmax_b,
+         seatsocc_b TYPE sflight-seatsocc_b,
+         seatsmax_f TYPE sflight-seatsmax_f,
+         seatsocc_f TYPE sflight-seatsocc_f,
+       END OF gs_seats.
 
+DATA : gt_seats LIKE TABLE OF gs_seats.
+
+CLASS lcl_event_handler DEFINITION.
+  PUBLIC SECTION.
+    METHODS handle_double_click
+                FOR EVENT double_click OF cl_gui_alv_grid
+      IMPORTING e_row e_column es_row_no.
+ENDCLASS.
+
+CLASS lcl_event_handler IMPLEMENTATION.
+  METHOD handle_double_click.
+    READ TABLE gt_seats INTO gs_seats INDEX e_row-index.
+
+    SELECT *
+      INTO TABLE @DATA(lt_stock)
+      FROM sbook
+      WHERE carrid = @gs_seats-carrid
+      AND connid = @gs_seats-connid
+      AND fldate = @gs_seats-fldate.
+    IF sy-subrc = 0.
+      DATA : g_table TYPE REF TO cl_salv_table.
+
+      CALL METHOD cl_salv_table=>factory
+        IMPORTING
+          r_salv_table = g_table
+        CHANGING
+          t_table      = lt_stock[].
+
+      g_table->set_screen_popup(
+      start_column = 10
+      end_column = 150
+      start_line = 10
+      end_line = 25 ).
+      g_table->display( ).
+    ENDIF.
+  ENDMETHOD.
+ENDCLASS.
+
+DATA: g_event_handler TYPE REF TO lcl_event_handler.
 
 
 " 조회 화면을 구성한다.
@@ -43,7 +98,7 @@ START-OF-SELECTION.
   WHERE a~fldate IN @s_fldate
     AND b~cityfrom = @p_from
     AND b~cityto = @p_to
-   INTO TABLE @DATA(gt_seats).
+   into CORRESPONDING FIELDS OF table @gt_seats[].
 
   " 위에 있는 데이터는 select 구문에서 필드를 정의하기 위해서는 테이블 명 뒤에 ~를 붙이고 그 뒤에 테이블 필드명을 적는다.
   " 그리고 각각의 from 절에 테이블 마다 별칭을 사용한다.
@@ -99,8 +154,8 @@ MODULE pbo100 OUTPUT.
     APPEND ls_fieldcat TO lt_fieldcat.
   ENDLOOP.
 
-" 보통 alv를 구성할 떄 보통 lvc_t_fcat에 필드 목록을 직접 작성한다.(수동)
-" 하지만 이 방법은 필드가 많을땐느 비효율적인데 이래서 동적으로 작성할 수 있게 한다.
+  " 보통 alv를 구성할 떄 보통 lvc_t_fcat에 필드 목록을 직접 작성한다.(수동)
+  " 하지만 이 방법은 필드가 많을땐느 비효율적인데 이래서 동적으로 작성할 수 있게 한다.
 * lr_tabdescr -> 테이블 구조 설명 객체 참조
 * lr_data -> 동적으로 생성되는 라인 데이터 참조
 * lt_dfies / ls_dfies -> DDIC 필드 정보 구조
@@ -131,15 +186,19 @@ MODULE pbo100 OUTPUT.
 * - 필드 카탈로그 완성!
 
 
-  " 이제 출력을 해보자.
-  " 출력은 grid를 출력하는 것이니 gv_grid를 이용한다.
-  CALL METHOD gv_grid->set_table_for_first_display
-  " EXPORTING
-  " i_structure_name = ???  " 데이터의 필드들이 너무 많이 섞여버려서 어떤것을 기준으로 해야할지 모를때 필드 카탈로그를 사용하면 된다.
-  " 수동으로 하나하나 만들어서 처리하는 방법과 그냥 동적으로 처리하는 방법 이렇게 2가지로 나뉜다.
-    CHANGING
-      it_fieldcatalog = lt_fieldcat
-      it_outtab       = gt_seats[].
+" [NEW!] 이벤트 헨들러 등록하기
+create object g_event_handler.
+SET HANDLER g_event_handler->handle_double_click FOR gv_grid.
+
+" 이제 출력을 해보자.
+" 출력은 grid를 출력하는 것이니 gv_grid를 이용한다.
+CALL METHOD gv_grid->set_table_for_first_display
+" EXPORTING
+" i_structure_name = ???  " 데이터의 필드들이 너무 많이 섞여버려서 어떤것을 기준으로 해야할지 모를때 필드 카탈로그를 사용하면 된다.
+" 수동으로 하나하나 만들어서 처리하는 방법과 그냥 동적으로 처리하는 방법 이렇게 2가지로 나뉜다.
+  CHANGING
+    it_fieldcatalog = lt_fieldcat
+    it_outtab       = gt_seats[].
 
 ENDMODULE.
 *&---------------------------------------------------------------------*
