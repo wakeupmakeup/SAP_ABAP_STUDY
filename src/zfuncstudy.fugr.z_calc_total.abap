@@ -16,11 +16,14 @@ FUNCTION Z_CALC_TOTAL.
 " 2) price_zero : 단가가 0일때
 
 if iv_qty = 0.
-  RAISE qty_zero.
+*RAISE qty_zero.
+  MESSAGE e001(zmsg_demo). " 수량이 0입니다.
 ELSEIF iv_price = 0.
-  raise price_zero.
+*  raise price_zero.
+  MESSAGE e002(zmsg_demo). "단가가 0입니다.
 endif.
 
 ev_total = iv_price * iv_qty * '1.1'. " 부가새 포함.
+message s003(zmsg_demo). " 계산 완료
 
 ENDFUNCTION.
