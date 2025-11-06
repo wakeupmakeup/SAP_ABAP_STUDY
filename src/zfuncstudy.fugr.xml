@@ -27,6 +27,14 @@
        <REFERENCE>X</REFERENCE>
       </RSEXP>
      </EXPORT>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>QTY_ZERO</EXCEPTION>
+      </RSEXC>
+      <RSEXC>
+       <EXCEPTION>PRICE_ZERO</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
      <DOCUMENTATION>
       <RSFDO>
        <PARAMETER>IV_PRICE</PARAMETER>
@@ -39,6 +47,16 @@
       <RSFDO>
        <PARAMETER>EV_TOTAL</PARAMETER>
        <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>QTY_ZERO</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>수량이 0일떄</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>PRICE_ZERO</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>단가가 0일때</STEXT>
       </RSFDO>
      </DOCUMENTATION>
     </item>

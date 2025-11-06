@@ -6,7 +6,20 @@ FUNCTION Z_CALC_TOTAL.
 *"     REFERENCE(IV_QTY)
 *"  EXPORTING
 *"     REFERENCE(EV_TOTAL)
+*"  EXCEPTIONS
+*"      QTY_ZERO
+*"      PRICE_ZERO
 *"----------------------------------------------------------------------
+
+" 예외 정의
+" 1) qty_zero : 수량이 0일때
+" 2) price_zero : 단가가 0일때
+
+if iv_qty = 0.
+  RAISE qty_zero.
+ELSEIF iv_price = 0.
+  raise price_zero.
+endif.
 
 ev_total = iv_price * iv_qty * '1.1'. " 부가새 포함.
 
